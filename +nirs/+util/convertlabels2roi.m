@@ -5,7 +5,7 @@ function R = convertlabels2roi(probe1020,label,type)
 
 if(nargin<2 || isempty(label))
     label='?';
-    type={'aal','Brodmann (MRIcron)'};
+    type={'aal','Brodmann (MRIcron)','Brodmann (Talairach daemon)'};
 end
 
 
@@ -23,7 +23,7 @@ useMNI=false;
 
 
 if(nargin<3 & ~exist('type','var'))
-     type={'aal' 'Brodmann (MRIcron)' 'Brodmann (Talairach daemon)' 'gordan' 'mmp'};
+     type={'aal' 'Brodmann (MRIcron)' 'Brodmann (Talairach daemon)'};
 elseif(~iscellstr(type))
     type={type};
 end

@@ -28,7 +28,7 @@ end
 for i=1:length(data)
     filename2=filename20;
     if(~isempty(runs))
-        if(isnumber(runs))
+        if(isnumeric(runs))
             runs=str2num(runs);
         end
         if(iscellstr(runs))

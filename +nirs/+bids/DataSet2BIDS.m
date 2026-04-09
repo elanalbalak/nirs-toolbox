@@ -88,7 +88,7 @@ fprintf(fid,'}');
 fclose(fid);
 
 fid=fopen(fullfile(folder,'README.md'),'w');
-fprintf(fid,'%s',ReadME);
+fprintf(fid,'%s',ReadMe);
 fclose(fid);
 
 

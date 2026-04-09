@@ -121,9 +121,15 @@ fwdBEM=fwdBEM.precomputeK;
 
 aal=load(which('ROI_MNI_V5_Border_modified.mat'));
 n1=aal.BORDER_XYZ';
+n1=n1-ones(size(n1,1),1)*mean(n1,1);
+n1=n1*1.8;
+
 n2=fwdBEM.mesh(end).nodes;
-[tr,tt]=icp(n2',n1');
-n1p=(tr * n1' + tt*ones(1,size(n1,1)))';
+%[tr,tt]=icp(n2',n1');
+%n1p=(tr * n1' + tt*ones(1,size(n1,1)))';
+
+n1p=n1;
+n1p(:,3)=n1p(:,3)-4;
 
 Labels=Dictionary;
 for id=1:length(aal.ROI)
@@ -137,8 +143,9 @@ for id=1:length(aal.ROI)
         lst2=find(d<5);
         %n2(lst2,:);
         S.VertexIndex{cnt,1}=lst2;
+        S.ID{cnt,1}=aal.ROI{id}(j).ID;
         S.Label{cnt,1}=aal.ROI{id}(j).Nom_L;
-        S.Region{cnt,1}=aal.ROI{id}(j).Nom_L;
+        S.Region{cnt,1}=aal.ROI{id}(j).Nom_C;
         cnt=cnt+1;
         end
     end

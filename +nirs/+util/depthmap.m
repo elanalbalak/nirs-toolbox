@@ -1,13 +1,12 @@
-function varargout = depthmap(label,headshape,atlas)
+function varargout = depthmap(label,headshape,atlas,axishandle)
 
-if(nargin<3)
-    if(nargin<1)
-    atlas={'aal','Brodmann (MRIcron)'};
-    else
-      atlas={'aal' 'Brodmann (MRIcron)' 'Brodmann (Talairach daemon)' 'gordan' 'mmp'};
-    end
+if(nargin<3 || isempty(atlas))
+    atlas={'aal','Brodmann (MRIcron)','Brodmann (Talairach daemon)'};
 end
 
+if(nargin<4)
+    axishandle=[];
+end
 
 if(nargin>1)
     if(isa(headshape,'nirs.core.Probe1020'))
@@ -135,7 +134,10 @@ region={region{i}}';
 
 
 if(nargout==0)
-    figure;
+    if(isempty(axishandle))
+        figure;
+        axishandle=gca;
+    end
     tbl2=nirs.util.list_1020pts('Cz');
     [xx,yy]=probe1020.convert2d([tbl2.X tbl2.Y tbl2.Z]);
     shiftx=-xx; shifty=-yy;
@@ -155,7 +157,7 @@ if(nargout==0)
     set(h,'alphaData',1*(~isnan(IM)));
     
     hold on;
-    l=probe1020.draw1020([],[],gca);
+    l=probe1020.draw1020([],[],axishandle);
     set(l,'LineStyle', '-', 'LineWidth', 2)
     
     set(gcf,'color','w');
@@ -179,12 +181,12 @@ if(nargout==0)
         set(s,'HorizontalAlignment','center','VerticalAlignment','baseline')
     end
     
-    axis tight;
-    axis equal;
-    axis off;
+    axis(axishandle,'tight');
+    axis(axishandle,'equal');
+    axis(axishandle,'off');
     
-    cb=colorbar('SouthOutside');
-    caxis([0 40])
+    cb=colorbar(axishandle,'SouthOutside');
+    set(axishandle,'clim',[0 40])
     l=get(cb,'TickLabels');
     l{end}=['>' num2str(l{end})];
     set(cb,'TickLabels',l);

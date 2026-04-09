@@ -849,7 +849,8 @@ classdef Probe1020 < nirs.core.Probe
                     det = DetPos3D(d,:);
 
                     [x,y,z] = cylinder2P(2,100,src,det);
-                    surf(x,y,z,[],'FaceColor',[0 1 0],'EdgeAlpha',0);
+                    h(i)=surf(x,y,z,[],'FaceColor',[0 1 0],'EdgeAlpha',0);
+                    set(h(i),'Tag',['Src-' num2str(source(j)) ':Det-' num2str(detector(j))]);
 
                 end
             end
